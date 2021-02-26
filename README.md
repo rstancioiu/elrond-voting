@@ -1,2 +1,2 @@
-# elrond-store-document
-Store a document with a smart contract in the storage
+# elrond-voting
+Create a poll for users to vote
