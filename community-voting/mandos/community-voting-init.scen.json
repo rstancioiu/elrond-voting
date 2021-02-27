@@ -24,7 +24,7 @@
                 {
                     "creatorAddress": "address:my_address",
                     "creatorNonce": "0",
-                    "newAddress": "address:the_poll_contract"
+                    "newAddress": "address:the_community_voting_contract"
                 }
             ]
         },
@@ -63,7 +63,7 @@
                     "balance": "1,000,000",
                     "storage": {}
                 },
-                "address:the_poll_contract": {
+                "address:the_community_voting_contract": {
                     "nonce": "0",
                     "balance": "0",
                     "storage": {},

@@ -22,13 +22,15 @@ pub trait CommunityVoting {
         &self,
         poll_name: BoxedBytes,
         question: BoxedBytes,
-        answers: Vec<BoxedBytes>,
+        nb_answers: u8, // to be checked if we can remove this parameter
+        answers: BoxedBytes,
         opt_deadline: Option<u64>,
         opt_vote_limit: Option<u32>,
     ) -> SCResult<()> {
         self.create_voting_poll(
             poll_name,
             question,
+            nb_answers,
             answers,
             opt_deadline,
             opt_vote_limit
@@ -39,7 +41,8 @@ pub trait CommunityVoting {
         &self,
         poll_name: BoxedBytes,
         question: BoxedBytes,
-        answers: Vec<BoxedBytes>,
+        nb_answers: u8,
+        answers: BoxedBytes,
         opt_deadline: Option<u64>,
         opt_vote_limit: Option<u32>
     ) -> SCResult<()> {
@@ -57,7 +60,7 @@ pub trait CommunityVoting {
         let vote_limit = opt_vote_limit.unwrap_or_else(|| DEFAULT_VOTE_LIMIT);
 
         let mut vote_distribution: Vec<u32> = Vec::new();
-        for _index in (0..answers.len()).rev() {
+        for _index in (0..nb_answers).rev() {
             vote_distribution.push(0u32);
         }
 
