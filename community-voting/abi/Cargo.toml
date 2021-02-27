@@ -1,7 +1,7 @@
 [package]
 name = "community-voting-abi"
 version = "0.0.0"
-authors = ["Razvan Stancioiu <stancioiu.razvan@gmail.com>", "Alexandru Cosmin Voicu", "Anisia Iova <anisiai@yahoo.com>"]
+authors = ["Anisia Iova <anisiai@yahoo.com>", "Razvan Stancioiu <stancioiu.razvan@gmail.com>", "Alexandru Cosmin Voicu"]
 edition = "2018"
 publish = false
 
