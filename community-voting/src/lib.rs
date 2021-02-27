@@ -22,16 +22,14 @@ pub trait CommunityVoting {
         &self,
         poll_name: BoxedBytes,
         question: BoxedBytes,
-        nb_answers: u8, // to be checked if we can remove this parameter
-        answers: BoxedBytes,
+        choices: BoxedBytes,
         opt_deadline: Option<u64>,
         opt_vote_limit: Option<u32>,
     ) -> SCResult<()> {
         self.create_voting_poll(
             poll_name,
             question,
-            nb_answers,
-            answers,
+            choices,
             opt_deadline,
             opt_vote_limit
         )
@@ -41,8 +39,7 @@ pub trait CommunityVoting {
         &self,
         poll_name: BoxedBytes,
         question: BoxedBytes,
-        nb_answers: u8,
-        answers: BoxedBytes,
+        choices: BoxedBytes,
         opt_deadline: Option<u64>,
         opt_vote_limit: Option<u32>
     ) -> SCResult<()> {
@@ -58,16 +55,17 @@ pub trait CommunityVoting {
         require!(deadline > timestamp, "Deadline can't be in the past!");
     
         let vote_limit = opt_vote_limit.unwrap_or_else(|| DEFAULT_VOTE_LIMIT);
-
-        let mut vote_distribution: Vec<u32> = Vec::new();
-        for _index in (0..nb_answers).rev() {
-            vote_distribution.push(0u32);
+        require!(choices.len() > 0, "No choices have been submitted");
+        let nb_choices = choices.as_slice()[0] as u8;
+        let mut votes_distribution: Vec<u32> = Vec::new();
+        for _index in (0..nb_choices).rev() {
+            votes_distribution.push(0u32);
         }
 
         let poll_info = PollInfo {
             question,
-            answers,
-            vote_distribution,
+            choices,
+            votes_distribution,
             deadline,
             vote_limit
         };
@@ -91,13 +89,13 @@ pub trait CommunityVoting {
         let caller_address = self.get_caller();
 
         let selected_choice: usize = choice as usize;
-        let maximum_nb_choices: usize = poll_info.vote_distribution.len();
+        let maximum_nb_choices: usize = poll_info.votes_distribution.len();
 
         require!(
             selected_choice < maximum_nb_choices,
             "The selected choice needs to be between 0 and nb_answers - 1"
         );
-        let vote_count = self.get_current_vote_count(& poll_info.vote_distribution);
+        let vote_count = self.get_current_vote_count(& poll_info.votes_distribution);
 
         for vote_index in (0..vote_count).rev() {
             require!(
@@ -108,15 +106,15 @@ pub trait CommunityVoting {
 
         self.set_vote_owner(poll_name, vote_count, & caller_address);
 
-        poll_info.vote_distribution[selected_choice] += 1;
+        poll_info.votes_distribution[selected_choice] += 1;
         self.set_poll_info(poll_name, &poll_info);
 
         Ok(())
     }
 
-    fn get_current_vote_count(&self, vote_distribution: & Vec<u32>) -> u32 {
+    fn get_current_vote_count(&self, votes_distribution: & Vec<u32>) -> u32 {
         let mut current_vote_count = 0 as u32;
-        for votes in vote_distribution {
+        for votes in votes_distribution {
             current_vote_count += votes;
         }
         current_vote_count
@@ -141,7 +139,7 @@ pub trait CommunityVoting {
         }
 
         let poll_info = self.get_poll_info(& poll_name);
-        let vote_count = self.get_current_vote_count(& poll_info.vote_distribution);
+        let vote_count = self.get_current_vote_count(& poll_info.votes_distribution);
         if (self.get_block_timestamp() > poll_info.deadline) || (vote_count == poll_info.vote_limit) {
             return Status::Ended;
         }
