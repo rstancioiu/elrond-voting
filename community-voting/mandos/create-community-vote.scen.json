@@ -20,13 +20,13 @@
                     "0x",
                     "0x"
                 ],
-                "gasLimit": "100,000,000",
+                "gasLimit": "50,000",
                 "gasPrice": "0"
             },
             "expect": {
                 "status": "",
-                "gas": "99972879",
-                "refund": "*"
+                "gas": "22879",
+                "refund": ""
             }
         },
         {

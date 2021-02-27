@@ -36,12 +36,12 @@
                 "contractCode": "file:../output/community-voting.wasm",
                 "value": "0",
                 "arguments": [],
-                "gasLimit": "1,000,000",
+                "gasLimit": "50,000",
                 "gasPrice": "0"
             },
             "expect": {
                 "status": "0",
-                "gas": "*",
+                "gas": "39578",
                 "refund": "*"
             }
         },
