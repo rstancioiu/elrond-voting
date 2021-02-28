@@ -1,0 +1,62 @@
+{
+    "name": "community vote creation error when no choices are added",
+    "steps": [
+        {
+            "step": "externalSteps",
+            "path": "../community-voting-init.scen.json"
+        },
+        {
+            "step": "scCall",
+            "txId": "create voting poll",
+            "tx": {
+                "from": "address:emma",
+                "to": "address:community_voting_contract",
+                "value": "0",
+                "function": "create",
+                "arguments": [
+                    "str:vote",
+                    "str:EGLD to the moon ?",
+                    "",
+                    "0x",
+                    "0x"
+                ],
+                "gasLimit": "50,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "logs": "",
+                "status": "4",
+                "gas": "0",
+                "refund": "",
+                "message": "str:No choices have been submitted!"
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:emma": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:ray": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:norman": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:community_voting_contract": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {},
+                    "code": "file:../../output/community-voting.wasm"
+                }
+            }
+        }
+    ]
+}
