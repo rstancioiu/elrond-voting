@@ -4,17 +4,17 @@
         {
             "step": "setState",
             "accounts": {
-                "address:my_address": {
+                "address:emma": {
                     "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
                 },
-                "address:acc1": {
+                "address:ray": {
                     "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
                 },
-                "address:acc2": {
+                "address:norman": {
                     "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
@@ -22,17 +22,20 @@
             },
             "newAddresses": [
                 {
-                    "creatorAddress": "address:my_address",
+                    "creatorAddress": "address:emma",
                     "creatorNonce": "0",
-                    "newAddress": "address:the_community_voting_contract"
+                    "newAddress": "address:community_voting_contract"
                 }
-            ]
+            ],
+            "currentBlockInfo": {
+                "blockTimestamp": "u64:80"
+            }
         },
         {
             "step": "scDeploy",
             "txId": "deploy",
             "tx": {
-                "from": "address:my_address",
+                "from": "address:emma",
                 "contractCode": "file:../output/community-voting.wasm",
                 "value": "0",
                 "arguments": [],
@@ -41,29 +44,29 @@
             },
             "expect": {
                 "status": "0",
-                "gas": "39578",
+                "gas": "39499",
                 "refund": "*"
             }
         },
         {
             "step": "checkState",
             "accounts": {
-                "address:my_address": {
+                "address:emma": {
                     "nonce": "1",
                     "balance": "1,000,000",
                     "storage": {}
                 },
-                "address:acc1": {
+                "address:ray": {
                     "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
                 },
-                "address:acc2": {
+                "address:norman": {
                     "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
                 },
-                "address:the_community_voting_contract": {
+                "address:community_voting_contract": {
                     "nonce": "0",
                     "balance": "0",
                     "storage": {},

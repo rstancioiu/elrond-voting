@@ -51,8 +51,9 @@ pub trait CommunityVoting {
         require!(deadline > timestamp, "Deadline can't be in the past!");
     
         let vote_limit = opt_vote_limit.unwrap_or_else(|| DEFAULT_VOTE_LIMIT);
+        require!(vote_limit > 0, "Vote limit has to be different than 0!");
     
-        require!(choices.len() > 0, "No choices have been submitted");
+        require!(choices.len() > 0, "No choices have been submitted!");
         let votes_distribution: Vec<u32> = self.initiliaze_votes_distribution(& choices);
 
         let poll_info = PollInfo {
