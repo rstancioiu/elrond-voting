@@ -27,8 +27,8 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "21805",
-                "refund": "",
+                "gas": "21627",
+                "refund": "0",
                 "message": ""
             }
         },
@@ -51,7 +51,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "7230",
+                "gas": "7052",
                 "refund": "0",
                 "message": ""
             }
@@ -76,8 +76,8 @@
                 ],
                 "logs": "",
                 "status": "0",
-                "gas": "12305",
-                "refund": "0",
+                "gas": "8215",
+                "refund": "32",
                 "message": ""
             }
         },
@@ -108,8 +108,7 @@
                     "nonce": "0",
                     "balance": "0",
                     "storage": {
-                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:0|u32:0|u64:604880|0x01|u32:1",
-                        "''voteOwner|u32:4|''vote|u32:0": "address:emma"
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:0|u32:0|u64:604880|0x01|u32:1"
                     },
                     "code": "file:../../output/community-voting.wasm"
                 }
