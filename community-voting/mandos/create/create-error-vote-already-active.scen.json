@@ -27,7 +27,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "22797",
+                "gas": "22479",
                 "refund": "",
                 "message": ""
             }
@@ -35,8 +35,13 @@
         {
             "step": "checkState",
             "accounts": {
-                "address:emma": {
+                "address:don": {
                     "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
                 },
@@ -54,7 +59,7 @@
                     "nonce": "0",
                     "balance": "0",
                     "storage": {
-                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:0|u32:0|u32:0|u64:604880|u32:2000"
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:0|u32:0|u32:0|u64:604880|0x00"
                     },
                     "code": "file:../../output/community-voting.wasm"
                 }
@@ -90,8 +95,13 @@
         {
             "step": "checkState",
             "accounts": {
-                "address:emma": {
+                "address:don": {
                     "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
                 },
@@ -109,7 +119,7 @@
                     "nonce": "0",
                     "balance": "0",
                     "storage": {
-                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:0|u32:0|u32:0|u64:604880|u32:2000"
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:0|u32:0|u32:0|u64:604880|0x00"
                     },
                     "code": "file:../../output/community-voting.wasm"
                 }

@@ -10,7 +10,6 @@ use poll_info::PollInfo;
 use status::Status;
 
 const DEFAULT_DEADLINE_INTERVAL: u64 = 60 * 60 * 24 * 7;
-const DEFAULT_VOTE_LIMIT: u32 = 2000;
 
 #[elrond_wasm_derive::contract(CommunityVotingImpl)]
 pub trait CommunityVoting {
@@ -26,38 +25,22 @@ pub trait CommunityVoting {
         opt_deadline: Option<u64>,
         opt_vote_limit: Option<u32>,
     ) -> SCResult<()> {
-        self.create_voting_poll(
-            poll_name, question, choices, opt_deadline, opt_vote_limit
-        )
-    }
-
-    fn create_voting_poll(
-        & self,
-        poll_name: BoxedBytes,
-        question: BoxedBytes,
-        choices: BoxedBytes,
-        opt_deadline: Option<u64>,
-        opt_vote_limit: Option<u32>
-    ) -> SCResult<()> {
         require!(! poll_name.is_empty(), "Poll name can't be empty!");
 
+        let timestamp = self.get_block_timestamp();
         require!(
-            self.status(& poll_name) == Status::Inactive,
+            self.get_status(& poll_name, & timestamp) == Status::Inactive,
             "Community vote is already active!"
         );
     
-        let timestamp = self.get_block_timestamp();
         let deadline = opt_deadline.unwrap_or_else(|| timestamp + DEFAULT_DEADLINE_INTERVAL);
         require!(deadline > timestamp, "Deadline can't be in the past!");
-    
-        let vote_limit = opt_vote_limit.unwrap_or_else(|| DEFAULT_VOTE_LIMIT);
-        require!(vote_limit > 0, "Vote limit has to be different than 0!");
     
         require!(choices.len() > 0, "No choices have been submitted!");
         let votes_distribution: Vec<u32> = self.initiliaze_votes_distribution(& choices);
 
         let poll_info = PollInfo {
-            question, choices, votes_distribution, deadline, vote_limit
+            question, choices, votes_distribution, deadline, opt_vote_limit
         };
 
         self.set_poll_info(& poll_name, & poll_info);
@@ -77,9 +60,9 @@ pub trait CommunityVoting {
     #[endpoint]
     fn vote(& self, poll_name: & BoxedBytes, choice: u32) -> SCResult<()> {
         match self.status(& poll_name) {
-            Status::Inactive => sc_error!("Community vote is currently inactive."),
+            Status::Inactive => sc_error!("Community vote is currently inactive!"),
             Status::Running => { return self.vote_in_poll(& poll_name, choice); },
-            Status::Ended =>  sc_error!("Community vote finished! Check the results.")
+            Status::Ended =>  sc_error!("Community vote has finished! Check the results.")
         }
     }
 
@@ -134,13 +117,26 @@ pub trait CommunityVoting {
 
     #[view]
     fn status(& self, poll_name: & BoxedBytes) -> Status {
+        let timestamp = self.get_block_timestamp();
+        self.get_status(& poll_name, & timestamp)
+    }
+
+    fn get_status(& self, poll_name: & BoxedBytes, block_timestamp: & u64) -> Status {
         if self.is_empty_poll_info(poll_name) {
             return Status::Inactive;
         }
 
         let poll_info = self.get_poll_info(& poll_name);
         let vote_count = self.get_current_vote_count(& poll_info.votes_distribution);
-        if (self.get_block_timestamp() > poll_info.deadline) || (vote_count == poll_info.vote_limit) {
+        match poll_info.opt_vote_limit {
+            Some(vote_limit) => {
+                if vote_limit == vote_count {
+                    return Status::Ended;
+                }
+            },
+            None => {}
+        }
+        if (* block_timestamp) > poll_info.deadline {
             return Status::Ended;
         }
 

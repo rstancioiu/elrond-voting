@@ -1,0 +1,247 @@
+{
+    "name": "vote success",
+    "steps": [
+        {
+            "step": "externalSteps",
+            "path": "../create/create-success.scen.json"
+        },
+        {
+            "step": "scCall",
+            "txId": "vote",
+            "tx": {
+                "from": "address:emma",
+                "to": "address:community_voting_contract",
+                "value": "0",
+                "function": "vote",
+                "arguments": [
+                    "str:vote",
+                    "u32:0"
+                ],
+                "gasLimit": "50,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "logs": "",
+                "status": "0",
+                "gas": "7842",
+                "refund": "0",
+                "message": ""
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:don": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:ray": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:norman": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:community_voting_contract": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:0|u32:0|u64:604880|0x00",
+                        "''voteOwner|u32:4|''vote|u32:0": "address:emma"
+                    },
+                    "code": "file:../../output/community-voting.wasm"
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "txId": "vote",
+            "tx": {
+                "from": "address:ray",
+                "to": "address:community_voting_contract",
+                "value": "0",
+                "function": "vote",
+                "arguments": [
+                    "str:vote",
+                    "u32:1"
+                ],
+                "gasLimit": "50,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "logs": "",
+                "status": "0",
+                "gas": "4825",
+                "refund": "",
+                "message": ""
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:don": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:ray": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:norman": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:community_voting_contract": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:1|u32:0|u64:604880|0x00",
+                        "''voteOwner|u32:4|''vote|u32:0": "address:emma",
+                        "''voteOwner|u32:4|''vote|u32:1": "address:ray"
+                    },
+                    "code": "file:../../output/community-voting.wasm"
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "txId": "vote",
+            "tx": {
+                "from": "address:don",
+                "to": "address:community_voting_contract",
+                "value": "0",
+                "function": "vote",
+                "arguments": [
+                    "str:vote",
+                    "u32:1"
+                ],
+                "gasLimit": "50,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "logs": "",
+                "status": "0",
+                "gas": "1866",
+                "refund": "0",
+                "message": ""
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:don": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:ray": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:norman": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:community_voting_contract": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:2|u32:0|u64:604880|0x00",
+                        "''voteOwner|u32:4|''vote|u32:0": "address:emma",
+                        "''voteOwner|u32:4|''vote|u32:1": "address:ray",
+                        "''voteOwner|u32:4|''vote|u32:2": "address:don"
+                    },
+                    "code": "file:../../output/community-voting.wasm"
+                }
+            }
+        },
+        {
+            "step": "scCall",
+            "txId": "vote",
+            "tx": {
+                "from": "address:norman",
+                "to": "address:community_voting_contract",
+                "value": "0",
+                "function": "vote",
+                "arguments": [
+                    "str:vote",
+                    "u32:1"
+                ],
+                "gasLimit": "60,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "logs": "",
+                "status": "0",
+                "gas": "8907",
+                "refund": "0",
+                "message": ""
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:don": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:ray": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:norman": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:community_voting_contract": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:3|u32:0|u64:604880|0x00",
+                        "''voteOwner|u32:4|''vote|u32:0": "address:emma",
+                        "''voteOwner|u32:4|''vote|u32:1": "address:ray",
+                        "''voteOwner|u32:4|''vote|u32:2": "address:don",
+                        "''voteOwner|u32:4|''vote|u32:3": "address:norman"
+                    },
+                    "code": "file:../../output/community-voting.wasm"
+                }
+            }
+        }
+    ]
+}

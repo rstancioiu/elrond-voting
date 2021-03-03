@@ -8,5 +8,5 @@ pub struct PollInfo {
     pub choices: BoxedBytes,
     pub votes_distribution: Vec<u32>,
     pub deadline: u64,
-    pub vote_limit: u32
+    pub opt_vote_limit: Option<u32>
 }
