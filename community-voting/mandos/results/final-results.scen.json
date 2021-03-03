@@ -27,7 +27,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "21627",
+                "gas": "18451",
                 "refund": "0",
                 "message": ""
             }
@@ -51,7 +51,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "7052",
+                "gas": "3859",
                 "refund": "0",
                 "message": ""
             }
@@ -67,7 +67,7 @@
                 "arguments": [
                     "str:vote"
                 ],
-                "gasLimit": "50,000",
+                "gasLimit": "60,000",
                 "gasPrice": "0"
             },
             "expect": {
@@ -76,8 +76,8 @@
                 ],
                 "logs": "",
                 "status": "0",
-                "gas": "8215",
-                "refund": "32",
+                "gas": "2144",
+                "refund": "127",
                 "message": ""
             }
         },
@@ -108,7 +108,7 @@
                     "nonce": "0",
                     "balance": "0",
                     "storage": {
-                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:0|u32:0|u64:604880|0x01|u32:1"
+                        "''archive|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:0|u32:0|u64:604880|0x01|u32:1"
                     },
                     "code": "file:../../output/community-voting.wasm"
                 }

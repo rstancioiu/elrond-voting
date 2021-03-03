@@ -62,7 +62,8 @@ pub trait CommunityVoting {
         match self.status(& poll_name) {
             Status::Inactive => sc_error!("Community vote is currently inactive!"),
             Status::Running => { return self.vote_in_poll(& poll_name, choice); },
-            Status::Ended =>  sc_error!("Community vote has finished! Check the results.")
+            Status::Ended =>  sc_error!("Community vote has finished! Check the results."),
+            Status::Archived => sc_error!("Community vote has finished! Check the results.")
         }
     }
 
@@ -105,19 +106,21 @@ pub trait CommunityVoting {
 
     #[endpoint]
     fn get_results(& self, poll_name: & BoxedBytes) -> Option<PollInfo> {
-        let poll_status: Status = self.status(& poll_name);
-        if poll_status == Status::Inactive {
-            return None;
+        match self.status(& poll_name) {
+            Status::Inactive => None,
+            Status::Running => None,
+            Status::Ended => {
+                let poll_info: PollInfo = self.get_poll_info(& poll_name);
+                self.clear_storage(& poll_name, & poll_info);
+                self.set_poll_info_archived(& poll_name, & poll_info);
+                return Some(poll_info);
+            },
+            Status::Archived => return Some(self.get_poll_info_archived(& poll_name))
         }
-        if poll_status == Status::Running {
-            return None;
-        }
-        let poll_info: PollInfo = self.get_poll_info(& poll_name);
-        self.clear_storage(& poll_name, & poll_info);
-        Some(poll_info)
     }
 
     fn clear_storage(& self, poll_name: & BoxedBytes, poll_info: & PollInfo) {
+        self.clear_poll_info(poll_name);
         let vote_count = self.get_current_vote_count(& poll_info.votes_distribution);
         for vote_index in 0..vote_count {
             self.clear_vote_owner(poll_name, vote_index);
@@ -131,6 +134,9 @@ pub trait CommunityVoting {
     }
 
     fn get_status(& self, poll_name: & BoxedBytes, block_timestamp: & u64) -> Status {
+        if ! self.is_empty_poll_info_archived(poll_name) {
+            return Status::Archived;
+        }
         if self.is_empty_poll_info(poll_name) {
             return Status::Inactive;
         }
@@ -156,6 +162,19 @@ pub trait CommunityVoting {
 
     #[storage_is_empty("pollInfo")]
     fn is_empty_poll_info(& self, poll_name: & BoxedBytes) -> bool;
+
+    #[storage_clear("pollInfo")]
+    fn clear_poll_info(& self, poll_name: & BoxedBytes);
+
+    #[storage_set("archive")]
+    fn set_poll_info_archived(& self, poll_name: & BoxedBytes, poll_info: & PollInfo);
+
+    #[view(archived)]
+    #[storage_get("archive")]
+    fn get_poll_info_archived(& self, poll_name: & BoxedBytes) -> PollInfo;
+
+    #[storage_is_empty("archive")]
+    fn is_empty_poll_info_archived(& self, poll_name: & BoxedBytes) -> bool;
 
     #[storage_set("voteOwner")]
     fn set_vote_owner(& self, pool_name: & BoxedBytes, vote_id: u32, vote_owner: & Address);

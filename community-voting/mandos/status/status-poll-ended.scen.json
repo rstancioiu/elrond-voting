@@ -27,7 +27,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "21627",
+                "gas": "18451",
                 "refund": "",
                 "message": ""
             }
@@ -51,7 +51,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "7052",
+                "gas": "3859",
                 "refund": "0",
                 "message": ""
             }
@@ -76,7 +76,7 @@
                 ],
                 "logs": "",
                 "status": "0",
-                "gas": "28041",
+                "gas": "24710",
                 "refund": "0",
                 "message": ""
             }
