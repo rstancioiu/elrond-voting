@@ -75,7 +75,7 @@ pub trait CommunityVoting {
         let maximum_nb_choices: usize = poll_info.votes_distribution.len();
         require!(
             selected_choice < maximum_nb_choices,
-            "The selected choice needs to be between 0 and nb_answers - 1"
+            "The selected choice needs to be between 0 and nb_answers - 1!"
         );
 
         // TODO: Create method has_caller_already_voted.
@@ -83,7 +83,7 @@ pub trait CommunityVoting {
         for vote_index in (0..vote_count).rev() {
             require!(
                 self.get_vote_owner(poll_name, vote_index) != caller_address,
-                "A voter can vote only once"
+                "A voter can vote only once!"
             );
         }
 
@@ -103,7 +103,7 @@ pub trait CommunityVoting {
         current_vote_count
     }
 
-    #[endpoint]
+    #[view]
     fn get_results(& self, poll_name: & BoxedBytes) -> Option<PollInfo> {
         let poll_status: Status = self.status(&poll_name);
         if poll_status == Status::Inactive {

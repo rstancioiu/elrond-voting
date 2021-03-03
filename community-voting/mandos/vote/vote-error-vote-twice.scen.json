@@ -1,24 +1,21 @@
 {
-    "name": "community vote creation success",
+    "name": "error vote twice",
     "steps": [
         {
             "step": "externalSteps",
-            "path": "../community-voting-init.scen.json"
+            "path": "../create/create-success.scen.json"
         },
         {
             "step": "scCall",
-            "txId": "create voting poll",
+            "txId": "vote",
             "tx": {
                 "from": "address:emma",
                 "to": "address:community_voting_contract",
                 "value": "0",
-                "function": "create",
+                "function": "vote",
                 "arguments": [
                     "str:vote",
-                    "str:EGLD to the moon ?",
-                    "u8:3|str:To the moon and back|str:To mars|str:To Papa Elon",
-                    "0x",
-                    "0x01|u32:02"
+                    "u32:0"
                 ],
                 "gasLimit": "50,000",
                 "gasPrice": "0"
@@ -27,8 +24,8 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "21805",
-                "refund": "",
+                "gas": "7838",
+                "refund": "0",
                 "message": ""
             }
         },
@@ -41,7 +38,7 @@
                     "storage": {}
                 },
                 "address:emma": {
-                    "nonce": "1",
+                    "nonce": "2",
                     "balance": "1,000,000",
                     "storage": {}
                 },
@@ -59,10 +56,35 @@
                     "nonce": "0",
                     "balance": "0",
                     "storage": {
-                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:0|u32:0|u32:0|u64:604880|0x01|u32:02"
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:1|u32:0|u32:0|u64:604880|0x00",
+                        "''voteOwner|u32:4|''vote|u32:0": "address:emma"
                     },
                     "code": "file:../../output/community-voting.wasm"
                 }
+            }
+        },
+        {
+            "step": "scCall",
+            "txId": "vote",
+            "tx": {
+                "from": "address:emma",
+                "to": "address:community_voting_contract",
+                "value": "0",
+                "function": "vote",
+                "arguments": [
+                    "str:vote",
+                    "u32:0"
+                ],
+                "gasLimit": "50,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "logs": "",
+                "status": "4",
+                "gas": "0",
+                "refund": "0",
+                "message": "str:A voter can vote only once!"
             }
         }
     ]

@@ -25,7 +25,7 @@
                 "logs": "",
                 "status": "4",
                 "gas": "0",
-                "refund": "",
+                "refund": "0",
                 "message": "str:Community vote is currently inactive!"
             }
         },
