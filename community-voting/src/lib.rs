@@ -1,7 +1,7 @@
 #![no_std]
 #![allow(clippy::too_many_arguments)]
 
-imports!();
+elrond_wasm::imports!();
 
 mod poll_info;
 mod status;
@@ -90,7 +90,7 @@ pub trait CommunityVoting {
         self.set_vote_owner(poll_name, vote_count, & caller_address);
 
         poll_info.votes_distribution[selected_choice] += 1;
-        self.set_poll_info(poll_name, &poll_info);
+        self.set_poll_info(poll_name, & poll_info);
 
         Ok(())
     }
@@ -103,16 +103,25 @@ pub trait CommunityVoting {
         current_vote_count
     }
 
-    #[view]
+    #[endpoint]
     fn get_results(& self, poll_name: & BoxedBytes) -> Option<PollInfo> {
-        let poll_status: Status = self.status(&poll_name);
+        let poll_status: Status = self.status(& poll_name);
         if poll_status == Status::Inactive {
             return None;
         }
         if poll_status == Status::Running {
             return None;
         }
-        Some(self.get_poll_info(& poll_name))
+        let poll_info: PollInfo = self.get_poll_info(& poll_name);
+        self.clear_storage(& poll_name, & poll_info);
+        Some(poll_info)
+    }
+
+    fn clear_storage(& self, poll_name: & BoxedBytes, poll_info: & PollInfo) {
+        let vote_count = self.get_current_vote_count(& poll_info.votes_distribution);
+        for vote_index in 0..vote_count {
+            self.clear_vote_owner(poll_name, vote_index);
+        }
     }
 
     #[view]
@@ -126,15 +135,10 @@ pub trait CommunityVoting {
             return Status::Inactive;
         }
 
-        let poll_info = self.get_poll_info(& poll_name);
+        let poll_info: PollInfo = self.get_poll_info(& poll_name);
         let vote_count = self.get_current_vote_count(& poll_info.votes_distribution);
-        match poll_info.opt_vote_limit {
-            Some(vote_limit) => {
-                if vote_limit == vote_count {
-                    return Status::Ended;
-                }
-            },
-            None => {}
+        if poll_info.opt_vote_limit == Some(vote_count) {
+            return Status::Ended;
         }
         if (* block_timestamp) > poll_info.deadline {
             return Status::Ended;
@@ -158,4 +162,7 @@ pub trait CommunityVoting {
 
     #[storage_get("voteOwner")]
     fn get_vote_owner(& self, pool_name: & BoxedBytes, vote_id: u32) -> Address;
+
+    #[storage_clear("voteOwner")]
+	fn clear_vote_owner(&self, pool_name: & BoxedBytes, vote_id: u32);
 }

@@ -24,7 +24,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "7838",
+                "gas": "7660",
                 "refund": "0",
                 "message": ""
             }
@@ -82,7 +82,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "4821",
+                "gas": "4643",
                 "refund": "",
                 "message": ""
             }
@@ -141,7 +141,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "1862",
+                "gas": "1684",
                 "refund": "0",
                 "message": ""
             }
@@ -201,7 +201,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "8903",
+                "gas": "8725",
                 "refund": "0",
                 "message": ""
             }
