@@ -24,7 +24,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "7660",
+                "gas": "4467",
                 "refund": "0",
                 "message": ""
             }
@@ -82,7 +82,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "4643",
+                "gas": "1450",
                 "refund": "",
                 "message": ""
             }
@@ -134,14 +134,14 @@
                     "str:vote",
                     "u32:1"
                 ],
-                "gasLimit": "50,000",
+                "gasLimit": "60,000",
                 "gasPrice": "0"
             },
             "expect": {
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "1684",
+                "gas": "8491",
                 "refund": "0",
                 "message": ""
             }
@@ -201,7 +201,7 @@
                 "out": [],
                 "logs": "",
                 "status": "0",
-                "gas": "8725",
+                "gas": "5532",
                 "refund": "0",
                 "message": ""
             }

@@ -5,4 +5,5 @@ pub enum Status {
 	Inactive,
 	Running,
 	Ended,
+	Archived
 }
