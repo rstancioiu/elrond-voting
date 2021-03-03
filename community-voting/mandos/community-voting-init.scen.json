@@ -4,6 +4,11 @@
         {
             "step": "setState",
             "accounts": {
+                "address:don": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
                 "address:emma": {
                     "nonce": "0",
                     "balance": "1,000,000",
@@ -22,7 +27,7 @@
             },
             "newAddresses": [
                 {
-                    "creatorAddress": "address:emma",
+                    "creatorAddress": "address:don",
                     "creatorNonce": "0",
                     "newAddress": "address:community_voting_contract"
                 }
@@ -35,7 +40,7 @@
             "step": "scDeploy",
             "txId": "deploy",
             "tx": {
-                "from": "address:emma",
+                "from": "address:don",
                 "contractCode": "file:../output/community-voting.wasm",
                 "value": "0",
                 "arguments": [],
@@ -44,15 +49,20 @@
             },
             "expect": {
                 "status": "0",
-                "gas": "39499",
-                "refund": "*"
+                "gas": "39117",
+                "refund": "0"
             }
         },
         {
             "step": "checkState",
             "accounts": {
-                "address:emma": {
+                "address:don": {
                     "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "0",
                     "balance": "1,000,000",
                     "storage": {}
                 },

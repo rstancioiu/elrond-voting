@@ -1,5 +1,5 @@
 {
-    "name": "community vote creation error when an invalid vote limit is added",
+    "name": "invalid vote, no poll created",
     "steps": [
         {
             "step": "externalSteps",
@@ -7,18 +7,15 @@
         },
         {
             "step": "scCall",
-            "txId": "create voting poll",
+            "txId": "try to vote",
             "tx": {
                 "from": "address:emma",
                 "to": "address:community_voting_contract",
                 "value": "0",
-                "function": "create",
+                "function": "vote",
                 "arguments": [
                     "str:vote",
-                    "str:EGLD to the moon ?",
-                    "u8:3|str:To the moon and back|str:To mars|str:To Papa Elon",
-                    "0x",
-                    "0x01|u32:0"
+                    "u32:0"
                 ],
                 "gasLimit": "50,000",
                 "gasPrice": "0"
@@ -29,14 +26,19 @@
                 "status": "4",
                 "gas": "0",
                 "refund": "",
-                "message": "str:Vote limit has to be different than 0!"
+                "message": "str:Community vote is currently inactive!"
             }
         },
         {
             "step": "checkState",
             "accounts": {
+                "address:don": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
                 "address:emma": {
-                    "nonce": "2",
+                    "nonce": "1",
                     "balance": "1,000,000",
                     "storage": {}
                 },

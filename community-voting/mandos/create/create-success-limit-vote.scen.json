@@ -1,5 +1,5 @@
 {
-    "name": "community vote creation error when no choices are added",
+    "name": "community vote creation success",
     "steps": [
         {
             "step": "externalSteps",
@@ -16,9 +16,9 @@
                 "arguments": [
                     "str:vote",
                     "str:EGLD to the moon ?",
-                    "",
+                    "u8:3|str:To the moon and back|str:To mars|str:To Papa Elon",
                     "0x",
-                    "0x"
+                    "0x01|u32:02"
                 ],
                 "gasLimit": "50,000",
                 "gasPrice": "0"
@@ -26,10 +26,10 @@
             "expect": {
                 "out": [],
                 "logs": "",
-                "status": "4",
-                "gas": "0",
+                "status": "0",
+                "gas": "21809",
                 "refund": "",
-                "message": "str:No choices have been submitted!"
+                "message": ""
             }
         },
         {
@@ -58,7 +58,9 @@
                 "address:community_voting_contract": {
                     "nonce": "0",
                     "balance": "0",
-                    "storage": {},
+                    "storage": {
+                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:0|u32:0|u32:0|u64:604880|0x01|u32:02"
+                    },
                     "code": "file:../../output/community-voting.wasm"
                 }
             }

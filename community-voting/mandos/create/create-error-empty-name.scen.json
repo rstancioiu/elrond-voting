@@ -35,8 +35,13 @@
         {
             "step": "checkState",
             "accounts": {
+                "address:don": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
                 "address:emma": {
-                    "nonce": "2",
+                    "nonce": "1",
                     "balance": "1,000,000",
                     "storage": {}
                 },
