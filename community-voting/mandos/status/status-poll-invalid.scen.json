@@ -1,5 +1,5 @@
 {
-    "name": "community vote creation success",
+    "name": "status poll invalid",
     "steps": [
         {
             "step": "externalSteps",
@@ -7,28 +7,26 @@
         },
         {
             "step": "scCall",
-            "txId": "create voting poll",
+            "txId": "status",
             "tx": {
                 "from": "address:emma",
                 "to": "address:community_voting_contract",
                 "value": "0",
-                "function": "create",
+                "function": "status",
                 "arguments": [
-                    "str:vote",
-                    "str:EGLD to the moon ?",
-                    "u8:3|str:To the moon and back|str:To mars|str:To Papa Elon",
-                    "0x",
-                    "0x01|u32:02"
+                    "str:vote"
                 ],
                 "gasLimit": "50,000",
                 "gasPrice": "0"
             },
             "expect": {
-                "out": [],
+                "out": [
+                    "0"
+                ],
                 "logs": "",
                 "status": "0",
-                "gas": "21805",
-                "refund": "",
+                "gas": "35943",
+                "refund": "0",
                 "message": ""
             }
         },
@@ -58,9 +56,7 @@
                 "address:community_voting_contract": {
                     "nonce": "0",
                     "balance": "0",
-                    "storage": {
-                        "''pollInfo|u32:4|''vote": "u32:18|str:EGLD to the moon ?|u32:40|u8:3|str:To the moon and back|str:To mars|str:To Papa Elon|u32:3|u32:0|u32:0|u32:0|u64:604880|0x01|u32:02"
-                    },
+                    "storage": {},
                     "code": "file:../../output/community-voting.wasm"
                 }
             }
