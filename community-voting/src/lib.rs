@@ -183,5 +183,5 @@ pub trait CommunityVoting {
     fn get_vote_owner(& self, pool_name: & BoxedBytes, vote_id: u32) -> Address;
 
     #[storage_clear("voteOwner")]
-	fn clear_vote_owner(&self, pool_name: & BoxedBytes, vote_id: u32);
+    fn clear_vote_owner(&self, pool_name: & BoxedBytes, vote_id: u32);
 }
