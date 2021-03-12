@@ -1,11 +1,11 @@
 [package]
-name = "community-voting-abi"
+name = "orchestrator-abi"
 version = "0.0.0"
 authors = ["Anisia Iova <anisiai@yahoo.com>", "Razvan Stancioiu <stancioiu.razvan@gmail.com>", "Alexandru Cosmin Voicu"]
 edition = "2018"
 publish = false
 
-[dependencies.community-voting]
+[dependencies.orchestrator]
 path = ".."
 
 [dependencies.elrond-wasm]
