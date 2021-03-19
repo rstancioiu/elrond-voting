@@ -9,9 +9,7 @@ publish = false
 path = ".."
 
 [dependencies.elrond-wasm]
-version = "0.10.3"
-path = "../../../../elrond-wasm"
+version = "0.10.5"
 
 [dependencies.elrond-wasm-debug]
-version = "0.10.3"
-path = "../../../../elrond-wasm-debug"
+version = "0.10.5"
