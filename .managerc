@@ -1,0 +1,7 @@
+{
+    "rust_version": "nightly-2021-02-26",
+    "contracts": [
+        "community-voting",
+        "orchestrator"
+    ]
+}
