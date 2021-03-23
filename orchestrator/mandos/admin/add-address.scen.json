@@ -1,0 +1,72 @@
+{
+    "name": "add address to orchestrator",
+    "steps": [
+        {
+            "step": "externalSteps",
+            "path": "../orchestrator-init.scen.json"
+        },
+        {
+            "step": "scCall",
+            "txId": "add address to orchestrator",
+            "tx": {
+                "from": "address:emma",
+                "to": "address:orchestrator",
+                "value": "0",
+                "function": "add_address",
+                "arguments": [
+                    "address:community_voting"
+                ],
+                "gasLimit": "50,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "logs": "",
+                "status": "0",
+                "gas": "28452",
+                "refund": "",
+                "message": ""
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:don": {
+                    "nonce": "1",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:emma": {
+                    "nonce": "2",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:ray": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:norman": {
+                    "nonce": "0",
+                    "balance": "1,000,000",
+                    "storage": {}
+                },
+                "address:orchestrator": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {
+                        "``admins": "address:don|address:emma",
+                        "``contracts|u8:0": "address:community_voting",
+                        "``nb_contracts": "u8:1"
+                    },
+                    "code": "file:../../output/orchestrator.wasm"
+                },
+                "address:community_voting": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {}
+                }
+            }
+        }
+    ]
+}

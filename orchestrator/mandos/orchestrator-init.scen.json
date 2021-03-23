@@ -29,7 +29,12 @@
                 {
                     "creatorAddress": "address:don",
                     "creatorNonce": "0",
-                    "newAddress": "address:orchestrator_contract"
+                    "newAddress": "address:orchestrator"
+                },
+                {
+                    "creatorAddress": "address:emma",
+                    "creatorNonce": "0",
+                    "newAddress": "address:community_voting"
                 }
             ],
             "currentBlockInfo": {
@@ -38,7 +43,7 @@
         },
         {
             "step": "scDeploy",
-            "txId": "deploy",
+            "txId": "deploy orchestrator",
             "tx": {
                 "from": "address:don",
                 "contractCode": "file:../output/orchestrator.wasm",
@@ -52,7 +57,24 @@
             },
             "expect": {
                 "status": "0",
-                "gas": "32412",
+                "gas": "30841",
+                "refund": "0"
+            }
+        },
+        {
+            "step": "scDeploy",
+            "txId": "deploy community voting",
+            "tx": {
+                "from": "address:emma",
+                "contractCode": "file:../../community-voting/output/community-voting.wasm",
+                "value": "0",
+                "arguments": [],
+                "gasLimit": "50,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "status": "0",
+                "gas": "38306",
                 "refund": "0"
             }
         },
@@ -65,7 +87,7 @@
                     "storage": {}
                 },
                 "address:emma": {
-                    "nonce": "0",
+                    "nonce": "1",
                     "balance": "1,000,000",
                     "storage": {}
                 },
@@ -79,13 +101,17 @@
                     "balance": "1,000,000",
                     "storage": {}
                 },
-                "address:orchestrator_contract": {
+                "address:orchestrator": {
                     "nonce": "0",
                     "balance": "0",
                     "storage": {
                         "``admins": "address:don|address:emma"
-                    },
-                    "code": "file:../output/orchestrator.wasm"
+                    }
+                },
+                "address:community_voting": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "storage": {}
                 }
             }
         }
