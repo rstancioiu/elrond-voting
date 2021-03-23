@@ -79,7 +79,7 @@ def main():
     parser.add_argument('--clean', dest='clean', action='store_true', default=False)
     parser.add_argument('--build', dest='build', action='store_true', default=False)
     parser.add_argument('--test', dest='test', action='store_true', default=False)
-    parser.add_argument('--contracts', dest='contracts', default=CONFIGURATION['contracts'])
+    parser.add_argument('--contracts', dest='contracts', nargs='+', default=CONFIGURATION['contracts'])
     args = parser.parse_args()
     setup_environment()
     if args.install:

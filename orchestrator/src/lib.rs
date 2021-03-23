@@ -9,12 +9,24 @@ pub trait Orchestrator {
     #[init]
     fn init(& self, #[var_args] admins: VarArgs<Address>) {
         self.set_admins(& admins.into_vec());
+        self.set_nb_contracts(0);
     }
 
     // Endpoint only available to admins
     #[endpoint]
-    fn add_address(& self, _address: Address) -> SCResult<()> {
-        Ok(())
+    fn add_address(& self, address: Address) -> SCResult<()> {
+        let admins: Vec<Address> = self.get_admins();
+        let caller: Address = self.get_caller();
+        for admin in admins {
+            if admin == caller {
+                let mut nb_contracts: u8 = self.get_nb_contracts();
+                self.set_contract(nb_contracts, address);
+                nb_contracts += 1;
+                self.set_nb_contracts(nb_contracts);
+                return Ok(());
+            }
+        }
+        sc_error!("No rights to add a new address!")
     }
 
     // Endpoint only available to admins
@@ -50,12 +62,18 @@ pub trait Orchestrator {
     #[storage_get("admins")]
     fn get_admins(& self) -> Vec<Address>;
 
-    #[storage_set("contract")]
-    fn set_contract(& self, contract_id: u8, contract: Address);
+    #[storage_get("nb_contracts")]
+    fn get_nb_contracts(& self) -> u8;
 
-    #[storage_get("contract")]
-    fn get_contract(& self, contract_id: u8) -> Address;
+    #[storage_set("nb_contracts")]
+    fn set_nb_contracts(& self, nb_contracts: u8);
 
-    #[storage_is_empty("contract")]
-    fn is_contract_empty(& self, contract_id: u8) -> bool;
+    #[storage_set("contracts")]
+    fn set_contract(& self, contract_index: u8, contract: Address);
+
+    #[storage_get("contracts")]
+    fn get_contract(& self, contract_index: u8) -> Address;
+
+    #[storage_is_empty("contracts")]
+    fn is_contract_empty(& self, contract_index: u8) -> bool;
 }
